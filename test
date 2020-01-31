@@ -1,0 +1,33 @@
+n=10;
+nd=2;
+A=randn(n,n);
+A=A'*A;
+B=zeros(n,n);
+for k=1:n
+    A(k,nd+k:end)=0;
+    A(nd+k:end,k)=0;
+end
+x=randn(n,1);
+b=A*x;
+
+x1=pinv(A)*b;
+
+
+B=zeros(nd*n,1);
+kk=0;
+for k1=1:nd
+    for k2=1:n-k1+1
+        kk=kk+1;
+        B(kk)=A(k2+k1-1,k2);
+    end
+    if(k1>1)
+        for k3=1:k1-1
+            kk=kk+1;
+            B(kk)=0;
+        end
+    end
+end
+
+ x2=sslc(n,2*n,B,b,nd);
+ [x,x1,x2(1:n)]
+        
